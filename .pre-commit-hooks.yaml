@@ -3,34 +3,39 @@
   description: Format files with cargo fmt.
   entry: cargo fmt
   language: system
-  types_or: ["rust", "file"]
-  files: "(.rs|Cargo.toml)$"
+  types: [rust]
   args: ["--"]
   stages:
     - pre-commit
     - pre-merge-commit
+    - manual
 - id: cargo-check
   name: cargo check
   description: Check the package for errors.
   entry: cargo check
   language: system
-  types_or: ["rust", "file"]
-  files: "(.rs|Cargo.toml|Cargo.lock)$"
+  types: [file]
+  files: ^.*(Cargo\.toml|Cargo\.lock|.*\.rs)$
+  pass_filenames: false
   stages:
     - pre-commit
     - pre-merge-commit
-  pass_filenames: false
+    - pre-push
+    - manual
 - id: clippy
   name: clippy
   description: Lint rust sources
   entry: cargo clippy
   language: system
   args: ["--", "-D", "warnings"]
-  types: [rust]
+  types: [file]
+  files: ^.*(Cargo\.toml|Cargo\.lock|.*\.rs)$
+  pass_filenames: false
   stages:
     - pre-commit
     - pre-merge-commit
-  pass_filenames: false
+    - pre-push
+    - manual
 - id: test
   name: test
   description: Run tests with cargo test
@@ -40,14 +45,17 @@
   args: ["--"]
   stages:
     - pre-push
+    - pre-merge-commit
     - manual
 - id: build
   name: build
   description: Build using cargo build
   language: system
-  types: ["rust"]
+  types: [file]
+  files: ^.*(Cargo\.toml|Cargo\.lock|.*\.rs)$
   stages:
     - pre-push
+    - pre-merge-commit
     - manual
   entry: cargo build
   pass_filenames: false
