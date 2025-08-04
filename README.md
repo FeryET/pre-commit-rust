@@ -12,7 +12,7 @@ This is a fork of the original [repo](https://github.com/doublify/pre-commit-rus
 
 ```yaml
 - repo: https://github.com/FeryET/pre-commit-rust
-  rev: v1.1.1
+  rev: v1.2.0
   hooks:
     - id: fmt
     - id: cargo-check
@@ -22,7 +22,7 @@ This is a fork of the original [repo](https://github.com/doublify/pre-commit-rus
 
 ```yaml
 - repo: https://github.com/FeryET/pre-commit-rust
-  rev: v1.1.1
+  rev: v1.2.0
   hooks:
     - id: fmt
       args: ["--verbose", "--edition", "2018", "--"]
@@ -34,7 +34,7 @@ You can use `test` and `build` pre-commit hooks to make sure you are not pushing
 
 ```yaml
 - repo: https://github.com/FeryET/pre-commit-rust
-  rev: v1.1.1
+  rev: v1.2.0
   hooks:
     - id: build
     - id: test
