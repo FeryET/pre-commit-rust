@@ -4,15 +4,21 @@
   entry: cargo fmt
   language: system
   types_or: ["rust", "file"]
-  files: '(.rs|Cargo.toml)$'
+  files: "(.rs|Cargo.toml)$"
   args: ["--"]
+  stages:
+    - pre-commit
+    - pre-merge-commit
 - id: cargo-check
   name: cargo check
   description: Check the package for errors.
   entry: cargo check
   language: system
   types_or: ["rust", "file"]
-  files: '(.rs|Cargo.toml|Cargo.lock)$'
+  files: "(.rs|Cargo.toml|Cargo.lock)$"
+  stages:
+    - pre-commit
+    - pre-merge-commit
   pass_filenames: false
 - id: clippy
   name: clippy
@@ -21,6 +27,9 @@
   language: system
   args: ["--", "-D", "warnings"]
   types: [rust]
+  stages:
+    - pre-commit
+    - pre-merge-commit
   pass_filenames: false
 - id: test
   name: test
@@ -29,12 +38,16 @@
   language: system
   types: [rust]
   args: ["--"]
-  stages: ["push"]
+  stages:
+    - pre-push
+    - manual
 - id: build
   name: build
   description: Build using cargo build
   language: system
   types: ["rust"]
-  stages: ["push", "manual",]
+  stages:
+    - pre-push
+    - manual
   entry: cargo build
   pass_filenames: false
